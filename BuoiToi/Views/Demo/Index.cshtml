@@ -1,0 +1,45 @@
+﻿@model BuoiToi.Models.Product;
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@* <h1>@ViewBag.products</h1> *@
+
+<nav class="navbar navbar-light bg-light justify-content-between">
+    <a class="navbar-brand">Products</a>
+    @* <form>
+        <input name="search" value="@ViewBag.search" />
+        <button>Search</button>
+    </form> *@
+    <form class="form-inline d-flex">
+        <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search" value="@ViewBag.Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</nav>
+<a class="btn btn-primary" href="/Product/Create">Create</a>
+<div class="row">
+ 
+
+    @foreach(Product item in ViewBag.Products)
+    {
+        <div class="col-3 py-1 px-1" >
+            <div class="card">
+                <img src="@item.ImageUrl" class="card-img-top" alt="..." style="height: 150px; object-fit: contain;">
+                <div class="card-body">
+                    <p class="card-text d-flex justify-content-between">
+                        <span>@item.Name</span>
+                        <a href="/Product/Update/@item.Id" class="btn btn-info">Update</a>
+                    </p>
+                    <p class="card-text d-flex justify-content-between">
+
+                        <span>@item.Price</span>
+                        <a href="/Product/View/@item.Id" class="btn btn-primary" >View</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+      
+    }
+    
+</div>
