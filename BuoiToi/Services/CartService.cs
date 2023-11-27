@@ -39,6 +39,7 @@ namespace BuoiToi.Services
 
             var quantityOld = await (from b in _db.Bills
                                      join bd in _db.BillDetails on b.Id equals bd.BillId
+                                     where b.Id == cart.Id
                                      select bd.Quantity)
                                        .SumAsync();
             if (billDetailHasProduct == null)
@@ -61,5 +62,42 @@ namespace BuoiToi.Services
 
             return quantityOld + quantity;
         }
+        public async Task<int> RemoveBilDetail(int id)
+        {
+            var bilDetail = await _db.BillDetails.FirstOrDefaultAsync(e => e.Id == id);
+            var quantityOld = await (from b in _db.Bills
+                                     join bd in _db.BillDetails on b.Id equals bd.BillId
+                                     where b.Id == bilDetail!.BillId
+                                     select bd.Quantity)
+                                       .SumAsync();
+            _db.BillDetails.Remove(bilDetail!);
+            await _db.SaveChangesAsync();
+            return quantityOld - bilDetail!.Quantity;
+        }
+        public async Task<CartResponse> GetCartDetail()
+        {
+            var cart =  await _db.Bills.FirstOrDefaultAsync(e => e.Status == StatusBill.CART);
+            
+            var cartDetails = await (from bd in _db.BillDetails
+                join p in _db.Products on bd.ProductId equals p.Id
+                where bd.BillId == cart!.Id
+                select new CartDetailResponse()
+                {
+                    ProductId = p.Id,
+                    ProductImage = p.ImageUrl,
+                    ProductName = p.Name,
+                    ProductPrice = p.Price,
+                    Quantity = bd.Quantity,
+                    BillDetailId = bd.Id
+                }).ToListAsync();
+            var totalPrice = cartDetails.Select(e => e.Quantity * e.ProductPrice).Sum();
+            return new CartResponse()
+            {
+                Details = cartDetails,
+                Id = cart!.Id,
+                Price = totalPrice
+            };
+        }
     }
+   
 }
