@@ -78,6 +78,8 @@ namespace BuoiToi.Services
         {
             var cart =  await _db.Bills.FirstOrDefaultAsync(e => e.Status == StatusBill.CART);
             
+            if (cart == null) return new CartResponse();
+            
             var cartDetails = await (from bd in _db.BillDetails
                 join p in _db.Products on bd.ProductId equals p.Id
                 where bd.BillId == cart!.Id
@@ -98,6 +100,22 @@ namespace BuoiToi.Services
                 Price = totalPrice
             };
         }
+        public async Task CheckOut(Bill bill)
+        {
+            var cart =  await _db.Bills.FirstOrDefaultAsync(e => e.Status == StatusBill.CART);
+            
+            if (cart == null) throw new Exception("Cart is not exist");
+            
+            cart.NameCustomer = bill.NameCustomer;
+            cart.NumberPhone = bill.NumberPhone;
+            cart.Address = bill.Address;
+            cart.Note = bill.Note;
+            cart.Status = StatusBill.DELIVERY;
+            _db.Bills.Update(cart);
+            await _db.SaveChangesAsync();
+        }
     }
+    
+    
    
 }

@@ -1,4 +1,5 @@
-﻿using BuoiToi.Services;
+﻿using BuoiToi.Models;
+using BuoiToi.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -37,6 +38,12 @@ namespace BuoiToi.Controllers
             }
             
             return  View();
+        }
+        [HttpGet("Information")]
+        public IActionResult Information()
+        {
+            
+            return  View();
         } 
         [HttpGet("Remove/{id}")]
         public async Task<IActionResult> Remove(int id)
@@ -44,6 +51,13 @@ namespace BuoiToi.Controllers
             
             int total =  await _cartService.RemoveBilDetail(id);
             return  RedirectToAction("CheckOut", new { total = total.ToString() });
+        } 
+        [HttpPost("CheckOut")]
+        public async Task<IActionResult> CheckOut(Bill bill)
+        {
+            
+            await _cartService.CheckOut(bill);
+            return Redirect("/Product/?total=0");
         } 
     }
 }

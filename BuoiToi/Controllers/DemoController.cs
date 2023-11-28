@@ -26,7 +26,7 @@ namespace BuoiToi.Controllers
         }
 
 
-        public async Task<IActionResult> Index([FromQuery] string search = "")
+        public async Task<IActionResult> Index([FromQuery] string search, [FromQuery] string total, [FromQuery] string order)
         {
             search ??= string.Empty;
 
@@ -46,8 +46,21 @@ namespace BuoiToi.Controllers
                                ImageUrl = p.ImageUrl,
                                Category = c
                            };
+            if (order == "desc")
+            {
+                products = products.OrderByDescending(product => product.Price);
+            }
+
+            if (order == "asc")
+            {
+                products = products.OrderBy(product => product.Price);
+            }
             ViewBag.Products = await products.ToListAsync();
             ViewBag.Search = search;
+            if (total != null || total != "")
+            {
+                ViewBag.Total = 0;
+            }
             return View("Index");
         }
         [HttpGet("Create")]

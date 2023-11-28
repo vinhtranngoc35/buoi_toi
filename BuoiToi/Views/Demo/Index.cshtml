@@ -13,14 +13,16 @@
         <button>Search</button>
     </form> *@
     <form class="form-inline d-flex">
+        <select class="form-control" name="order">
+            <option value="desc">Price high to low</option>
+            <option value="asc">Price low to high</option>
+        </select>
         <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search" value="@ViewBag.Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 </nav>
 <a class="btn btn-primary" href="/Product/Create">Create</a>
 <div class="row">
- 
-
     @foreach(Product item in ViewBag.Products)
     {
         <div class="col-3 py-1 px-1" >
@@ -33,7 +35,7 @@
                     </p>
                     <p class="card-text d-flex justify-content-between">
 
-                        <span>@item.Price</span>
+                        <span>@string.Format("{0:n0}đ", @item.Price)</span>
                         <a href="/Product/View/@item.Id" class="btn btn-primary" >View</a>
                     </p>
                 </div>
