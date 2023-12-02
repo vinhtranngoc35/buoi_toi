@@ -7,10 +7,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Web.Helpers;
 using BuoiToi.Services.Uploads;
 using BuoiToi.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BuoiToi.Controllers
 {
     [Route("/Product")]
+    [Authorize(Roles = "User")]
     public class DemoController : Controller
     {
         private readonly SetupDatabase _db;
@@ -59,7 +61,7 @@ namespace BuoiToi.Controllers
             ViewBag.Search = search;
             if (total != null || total != "")
             {
-                ViewBag.Total = 0;
+                ViewBag.Total = total;
             }
             return View("Index");
         }

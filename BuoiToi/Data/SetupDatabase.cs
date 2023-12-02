@@ -15,5 +15,7 @@ namespace BuoiToi.Data
         public DbSet<Bill> Bills { get; set; }
 
         public DbSet<BillDetail> BillDetails { get; set; }
+
+        public DbSet<User> Users { get; set; }
     }
 }

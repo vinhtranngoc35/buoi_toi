@@ -3,6 +3,7 @@ using BuoiToi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuoiToi.Migrations
 {
     [DbContext(typeof(SetupDatabase))]
-    partial class SetupDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20231202101457_add relationship for User and Cart")]
+    partial class addrelationshipforUserandCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

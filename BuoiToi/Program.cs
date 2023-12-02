@@ -1,19 +1,27 @@
 using BuoiToi.Data;
 using BuoiToi.Services;
 using BuoiToi.Services.Uploads;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Access/Login";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+    });
 
 builder.Services.AddDbContext<SetupDatabase>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
 
 builder.Services.AddTransient<TodoService>();
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<UploadService>();
 builder.Services.AddTransient<CartService>();
 
@@ -32,10 +40,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Access}/{action=Login}/{id?}");
 
 app.Run();

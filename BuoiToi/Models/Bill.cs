@@ -18,5 +18,9 @@ namespace BuoiToi.Models
         public string Note { get; set; } = string.Empty;
 
         public StatusBill? Status { get; set; } = StatusBill.CART;
+
+        public int UserId { get; set; }
+
+        public User? User { get; set; }
     }
 }

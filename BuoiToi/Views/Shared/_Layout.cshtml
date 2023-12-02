@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -33,8 +36,17 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
-                    <div>
-                        <a href="/Cart/CheckOut"><i class="fa fa-shopping-cart"></i> <span id="total">@ViewBag.Total</span></a>
+                    <div class="d-flex">
+                        @{
+                            var isAuthenticated = HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
+                            if (isAuthenticated)
+                            {
+                                <text>
+                                    <a class="nav-link text-dark mx-4" asp-area="" asp-controller="Access" asp-action="Logout">Logout</a>
+                                </text>
+                            }
+                        }
+                        <a class="nav-link text-dark" href="/Cart/CheckOut"><i class="fa fa-shopping-cart"></i> <span id="total">@ViewBag.Total</span></a>
                     </div>
                 </div>
             </div>

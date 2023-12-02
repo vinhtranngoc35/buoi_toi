@@ -1,4 +1,4 @@
-﻿namespace BuoiToi.Services
+﻿namespace BuoiToi.Services.DTO
 {
     public class CartResponse
     {

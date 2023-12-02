@@ -11,15 +11,15 @@
     <div class="card col-6 py-4">
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Name Customer</label>
-            <input type="text" class="form-control" name="NameCustomer" id="exampleFormControlInput1" placeholder="Vinh">
+            <input type="text" class="form-control" name="NameCustomer" id="exampleFormControlInput1" placeholder="Vinh" value="@ViewBag.User.NameCustomer">
             </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Number Phone</label>
-            <input type="text" class="form-control" name="NumberPhone" id="exampleFormControlInput1" placeholder="096990065">
+            <input type="text" class="form-control" name="NumberPhone" id="exampleFormControlInput1" value="@ViewBag.User.NumberPhone" placeholder="096990065">
         </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Address</label>
-            <input type="text" class="form-control" name="Address" id="exampleFormControlInput1" placeholder="105 Chi Lang">
+            <input type="text" class="form-control" name="Address" id="exampleFormControlInput1" value="@ViewBag.User.Address" placeholder="105 Chi Lang">
         </div>
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Note</label>

@@ -1,7 +1,6 @@
 ﻿using BuoiToi.Models;
 using BuoiToi.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BuoiToi.Controllers
 {
@@ -40,9 +39,9 @@ namespace BuoiToi.Controllers
             return  View();
         }
         [HttpGet("Information")]
-        public IActionResult Information()
+        public async Task<IActionResult> Information()
         {
-            
+            ViewBag.User = await _cartService.GetCurrentUser();
             return  View();
         } 
         [HttpGet("Remove/{id}")]
